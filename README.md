@@ -11,7 +11,7 @@ To get algorithm skills and practice coding
 	- [DFS_BFS](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/bfs_dfs)
 	- DP
 	- Graph
-	- Search
+	- [Search](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/search)
 
 - Kakao
 	- 2019
