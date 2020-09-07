@@ -1,5 +1,7 @@
 import sys
 
+# 주어진 문제의 구현 방식에 맞추어 구현을 해내는 유형의 문제
+
 def is_valid(s) :
 	stack = []
 	for i in range(len(s)) :
