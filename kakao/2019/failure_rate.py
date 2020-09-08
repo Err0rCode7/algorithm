@@ -28,3 +28,33 @@ def solution(N, stages) :
 
 for testcase in testcases :
 	print(solution(testcase[0], testcase[1]))
+
+'''
+# 방문과 현재 스테이지 따로 두기
+def solution(N, stages) :
+
+	failure_rate = []
+	in_stage = [0 for _ in range(N + 2)]
+	visit = [0 for _ in range(N + 2)]
+
+	for stage in stages :
+		in_stage[stage] += 1
+		visit[stage] += 1
+
+	for stage in stages :
+		for pre_stage in range(1, stage) :
+			visit[pre_stage] += 1
+
+	#print(in_stage)
+	for i in range(1, N + 1) :
+		if in_stage[i] == 0 :
+			failure_rate.append((0, i))
+		else :
+			failure_rate.append((float((in_stage[i]) / visit[i]), i))
+	failure_rate.sort(key=lambda x:(-x[0], x[1]))
+	answer = []
+	for a, b in failure_rate :
+		answer.append(b)
+	#print(b)
+	return answer
+'''
