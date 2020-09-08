@@ -1,6 +1,9 @@
 from collections import deque
 import sys
 
+# queue를 이용한 bfs 문제
+# x 노드 부터 시작하여 거리가 k인 노드의 갯수 문제
+
 def bfs(graph, x) :
 
 	queue = deque()
@@ -31,6 +34,8 @@ count = 0
 for i in range(n + 1) :
 	if (distance[i] == k) :
 		count +=1
-		print(i)
+
 if count == 0 :
 	print(-1)
+else :
+	print(count)

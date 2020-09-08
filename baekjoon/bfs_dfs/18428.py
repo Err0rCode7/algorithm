@@ -1,6 +1,13 @@
-from collections import deque
 import sys
 
+# 완전 탐색 문제 (dx, dy 활용)
+# 3개의 벽을 이용하여 선생님의 시야에 학생들이 있지 않는 방법이 존재하는지 판단하는 문제
+# 'T'는 teacher 'S'는 student 'X'는 벽을 놓을 수 있는 빈 공간 'O'는 벽
+
+# 선생님 리스트와 빈 공간 리스트를 각각 만들고
+# 빈 공간 리스트에 3가지 경우의 수를 완전 탐색하여 대입해본다.
+# 각각의 경우의 수 마다 선생님에게 걸리지 않는지 탐색하여 걸리지 않는 방법이 있다면 Yes,
+# 전부 탐색하여 걸리지 않는 방법이 없다면 No를 출력한다.
 
 def is_valid_graph(graph, t_list) :
 	for t in range(len(t_list)) :

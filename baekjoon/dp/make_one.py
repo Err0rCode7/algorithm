@@ -1,5 +1,7 @@
 import sys
 
+# 1을 만들기 위한 5, 3, 2의 최소 갯수를 구하는 문제
+
 def make_one(x) :
 	dp = [0] * 101
 

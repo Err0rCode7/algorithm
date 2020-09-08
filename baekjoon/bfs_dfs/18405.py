@@ -1,6 +1,10 @@
 from collections import deque
 import sys
 
+# queue를 이용한 bfs 문제
+# map에서 0이 아니고 가장 낮은 값 부터 시작하여 이 값이 1초마다 동서남북으로 0인 칸에 한 칸씩 증식을 할 때,
+# s초 상황에서 (o_x, o_y) 좌표에 있는 값 찾는 문제
+
 def bfs(graph) :
 	queue = deque()
 

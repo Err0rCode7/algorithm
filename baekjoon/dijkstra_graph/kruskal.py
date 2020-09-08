@@ -1,5 +1,8 @@
 import sys
 
+# 모든 노드들을 경로의 값이 낮은 값 경로부터 루프없이 연결하는 방식으로
+# 최소 비용으로 모든 노드를 연결하는 알고리즘
+
 def find_parent(parent, x) :
 	if (parent[x] != x) :
 		parent[x] = find_parent(parent, parent[x])
