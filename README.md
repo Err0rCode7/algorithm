@@ -7,7 +7,8 @@ To get algorithm skills and practice coding
 # practice index
 
 - Basic - Baekjoon
-	- Greedy
+	- [Greedy](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/greedy)
+	- [implementation](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/implementation)
 	- [DFS_BFS](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/bfs_dfs)
 	- [DP](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/dp)
 	- [Graph](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/dijkstra_graph)
