@@ -45,7 +45,6 @@ def solution(food_times, k) :
 			if foods[index][0] != 0:
 				temp.append([foods[index][0], foods[index][1]])
 		foods = temp
-	#print(k, foods[k][1])
 	return (foods[k][1])
 
 print(solution_2(testcases[0][0], testcases[0][1]))

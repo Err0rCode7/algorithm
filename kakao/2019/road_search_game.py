@@ -93,15 +93,19 @@ def solution(nodeinfo):
 
 ## 96점: 테스트 21번 실패
 def solution_2(nodeinfo):
-	x_len = 0
+
+	x_len = 0 # 최대 X 길이
+	# idx 추가
 	for idx, _node in enumerate(nodeinfo) :
 		if x_len < _node[0] :
 			x_len = _node[0]
 		_node.append(idx + 1)
+	# y값으로 1차정렬 x값으로 2차정렬
 	nodeinfo.sort(key= lambda x : (-x[1],x[0]))
 	top = nodeinfo[0][1]
 	level = [[]]
 	level_idx = 0
+	# level 단위로 나눈 리스트 생성
 	for x, y, idx in nodeinfo :
 		if top == y :
 			level[level_idx].append(node(x, y, idx))
@@ -110,10 +114,11 @@ def solution_2(nodeinfo):
 			top = y
 			level_idx += 1
 			level[level_idx].append(node(x, y, idx))
-
+	# 레벨이 오직 1레벨: root만 존재: 고정적인 답 제출
 	if len(level) == 1 :
 		return [[1],[1]]
 
+	# 트리의 레벨이 2 이상이므로 root 노드를 셋팅해준다.
 	child = level[1]
 	parent = level[0][0]
 	px, py, pidx = parent.get_attr()
@@ -131,6 +136,7 @@ def solution_2(nodeinfo):
 			c_node.set_r_boundary(px)
 			root.set_left(c_node)
 
+	# 레벨 단위로 부모, 자식으로 하여 진행
 	for i in range(1, len(level) - 1) :
 		parent = level[i]
 		child = level[i + 1]
@@ -153,9 +159,11 @@ def solution_2(nodeinfo):
 					c_node.set_r_boundary(px)
 					p_node.set_left(c_node)
 				else :
+					# 이미 자식으로 등록된 노드들 등록 방지
 					child_idx = c_i
 					break
 			if c_i == len(child) : break
+	# preorder, postorder 진행
 	pre_result = []
 	post_result = []
 	preorder(root, pre_result)
