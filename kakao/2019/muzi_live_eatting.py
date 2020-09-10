@@ -34,6 +34,8 @@ def solution(food_times, k) :
 
 	while True :
 		food_count = len(foods)
+		if food_count == 0 :
+			return -1
 		if (k < food_count) :
 			break
 		k -= food_count
