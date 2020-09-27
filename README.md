@@ -18,8 +18,8 @@ To get algorithm skills and practice coding
 	- [Trie](https://github.com/Err0rCode7/algorithm/tree/master/data_struct/trie.py)
 
 - Kakao
-	- [2020](HTTPS://GITHUB.COM/ERR0RCODE7/ALGORITHM/TREE/MASTER/KAKAO/2020)
-	- [2019](HTTPS://GITHUB.COM/ERR0RCODE7/ALGORITHM/TREE/MASTER/KAKAO/2019)
+	- [2020](https://github.com/Err0rCode7/algorithm/tree/master/kakao/2020)
+	- [2019](https://github.com/Err0rCode7/algorithm/tree/master/kakao/2019)
 	- 2018
 	- 2017
 
