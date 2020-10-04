@@ -13,7 +13,7 @@ To get algorithm skills and practice coding
 	- [DP](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/dp)
 	- [Graph](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/dijkstra_graph)
 	- [Search](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/search)
-
+	- [Sorting](https://github.com/Err0rCode7/algorithm/tree/master/baekjoon/sorting)
 - Data Structure
 	- [Trie](https://github.com/Err0rCode7/algorithm/tree/master/data_struct/trie.py)
 
