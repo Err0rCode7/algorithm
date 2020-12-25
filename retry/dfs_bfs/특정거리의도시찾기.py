@@ -32,8 +32,3 @@ if len(result) > 0:
 		print(node)
 else :
 	print(-1)
-
-
-
-
-
