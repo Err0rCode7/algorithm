@@ -20,7 +20,4 @@ for i in range(1, len(string)):
 	if target != string[i] and string[i] != string[i - 1]:
 		result += 1
 
-if result == 0:
-	result += 1
-
 print(result)
