@@ -1,7 +1,10 @@
 # test case
 
+# Q:
 # 5
 # 2 3 1 2 2
+
+# A:
 
 import sys
 
