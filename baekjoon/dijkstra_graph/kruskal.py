@@ -36,7 +36,7 @@ edges.sort()
 for edge in edges :
 	cost, node1, node2 = edge
 	if find_parent(node1) != find_parent(node2) :
-		union_parent(parent, a, b)
+		union_parent(parent, node1, node2)
 		result += cost
 
 print(result)
