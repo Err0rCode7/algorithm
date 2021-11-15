@@ -13,7 +13,6 @@ def solution(n, weak, dist):
 		for i in range(weak_origin_len):
 			weak_window = [weak[k] for k in range(i, i + weak_origin_len)]
 			worker_idx = 0
-			visited_points = []
 			coverage = weak_window[0] + workers[worker_idx]
 			for j in range(weak_origin_len) :
 				if coverage < weak_window[j] :
