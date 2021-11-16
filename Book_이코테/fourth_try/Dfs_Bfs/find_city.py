@@ -10,28 +10,21 @@ for i in range(M):
 	_from, _to = map(int, input().rstrip().split())
 	graph[_from].append(_to)
 
-visited = [0] * (N + 1)
-dists = [-1] * (N + 1)
-
+dists = [N + 1] * (N + 1)
 
 stack = deque()
 stack.append((X, 0))
 
-# Dfs - Fail !!!
-# Why ??..
+# Dfs - Success
 while stack :
 	node, dist = stack.pop()
-	if dists[node] > dist or dists[node] == -1 :
-		dists[node] = dist
-	elif visited[node] :
-		break
-	visited[node] = 1
+	dists[node] = dist
 	if dist + 1 > K : # back-tracking
 		continue
 	for next_node in graph[node]:
-		if next_node != X:
+		if dists[next_node] > dist + 1:
 			stack.append((next_node, dist + 1))
-count = 0
+
 result = []
 for node in range(N + 1):
 	if dists[node] == K :
@@ -42,7 +35,6 @@ if len(result) :
 		print(node)
 else :
 	print(-1)
-
 
 '''
 # Bfs - Success
