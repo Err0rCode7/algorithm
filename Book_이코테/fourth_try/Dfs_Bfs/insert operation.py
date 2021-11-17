@@ -2,7 +2,9 @@ import sys
 from itertools import permutations
 from collections import deque
 
-# 미완성
+# 우선 순위 적용한 코드
+# 두 블록으로 나누어서 풀기
+# *와 /로 엮여있는 지 검사를 진행한 후 이런 케이스는 Express는 새로운 stack으로 결과값을 받아서 푼다.
 
 def can_next(opers):
 	if opers[0] == '+' or opers[0] == '-':
@@ -11,19 +13,33 @@ def can_next(opers):
 		return True
 
 def calc_first(left, oper, values, opers):
-	right = values.popleft()
-	if oper == '*':
-		left *= right
+
+	if oper == '+':
+		return left + calc(values, opers)
+	elif oper == '-':
+		return left - calc(values, opers)
+	elif oper == '*':
+		right = values.popleft()
+		left = left * right
 	elif oper == '/':
-		left /= right
+		right = values.popleft()
+		left = left / right
+
 	oper = opers.popleft()
 	if len(opers) > 0 and can_next(opers) :
 		return calc_first(left, oper, values, opers)
 	else :
-		if oper == '+':
-			return left + calc(values, opers)
-		elif oper == '-':
-			return left - calc(values, opers)
+		if oper == '*':
+			result = left * values.popleft()
+			values.appendleft(result)
+			return calc(values, opers)
+		elif oper == '/':
+			result = left / values.popleft()
+			values.appendleft(result)
+			return calc(values, opers)
+		else :
+			# error
+			pass
 
 def calc(values, opers) :
 	result = 0
@@ -33,9 +49,9 @@ def calc(values, opers) :
 	if not opers :
 		return left
 	oper = opers.popleft()
+	# print(left, oper, values, opers)
 	if len(opers) > 0 and can_next(opers):
 		return calc_first(left, oper, values, opers)
-	
 	right = values.popleft()
 	if oper == '+':
 		result += left + right
@@ -71,7 +87,7 @@ for i in range(4) :
 			opers.append('/')
 
 min_value = 1e9
-max_value = -1
+max_value = -1e9
 
 value_combs = permutations(values, len(values))
 
@@ -81,9 +97,12 @@ for value_comb in value_combs:
 	for op_comb in op_combs:
 		print(op_comb, value_comb)
 		result = calc(deque(value_comb), deque(op_comb))
+		if result == 12:
+			print("the thing is")
+			print(op_comb, value_comb)
 		min_value = min(min_value, result)
 		max_value = max(max_value, result)
 
-print(min_value)
-print(max_value)
+print(round(min_value))
+print(round(max_value))
 
