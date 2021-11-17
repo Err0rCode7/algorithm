@@ -2,6 +2,8 @@ import sys
 from itertools import permutations
 from collections import deque
 
+# 미완성
+
 def can_next(opers):
 	if opers[0] == '+' or opers[0] == '-':
 		return False
