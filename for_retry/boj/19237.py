@@ -1,5 +1,5 @@
 from collections import deque
-import sys, heapq
+import sys
 
 input = sys.stdin.readline
 
@@ -39,22 +39,22 @@ sharks = deque([i for i in range(1, m + 1)])
 smell_time_q = deque()
 
 #shark, time
-smell = [[[0, 0] for _ in range(n + 2)] * (n + 2) for _ in range(n + 2)]
-
-for i in range(len(sharks)):
-	shark_number = sharks[i]
-	x, y = sharks_pos[shark_number]
-	smell[y][x][0] = k
-	smell[y][x][1] = shark_number
+smell = [[[0, 0] for _ in range(n + 2)] for _ in range(n + 2)]
 
 time = 0
 
-while time < 1000:
+while time <= 1000:
 	if len(sharks) <= 1:
 		break
-	print("#### round: ", time, sharks)
-	## 시간 카운팅
-	time += 1
+	# print("#### round: ", time, sharks)
+
+	## 냄새 뿌리기
+	for i in range(len(sharks)):
+		shark_number = sharks[i]
+		x, y = sharks_pos[shark_number]
+		smell_time_q.append((x, y, k))
+		smell[y][x][1] = k
+		smell[y][x][0] = shark_number
 
 	## 상어 이동
 	for i in range(len(sharks)):
@@ -64,35 +64,39 @@ while time < 1000:
 		my_smell_pos = []
 		move = False
 		dead = False
+		if board[pre_y][pre_x] == shark_number:
+			board[pre_y][pre_x] = 0
 		# 4 방향
-		print("sharks_number: ", shark_number)
-		print("pre:: ", (pre_x, pre_y))
+		# print("sharks_number: ", shark_number)
+		# print("pre:: ", (pre_x, pre_y))
+		# print(sharks_rules[shark_number][vector])
+		# for i in range(n):
+		# 	print(board[i + 1][1:n + 1])
+		# for i in range(n):
+		# 	print(smell[i + 1][1:n + 1])
 		for _dir in sharks_rules[shark_number][vector]:
 			nx, ny = pre_x + dx[_dir], pre_y + dy[_dir]
-			print("nx, ny", nx, ny)
+			# print("x, y", pre_x, pre_y)
+			# print("nx, ny", nx, ny)
 			if board[ny][nx] == -1:
 				continue
 			## 냄새 체크
-			if board[ny][nx] != 0 and board[ny][nx] < shark_number:
+			if 0 < board[ny][nx] < shark_number and smell[ny][nx][1] == 0:
 				dead = True
+				# print("dead")
 				break
 			# 빈 공간 발견시 이동
-			if (board[ny][nx] == 0 or board[ny][nx] > shark_number) and smell[ny][nx][0] == 0:
+			if (board[ny][nx] == 0 or board[ny][nx] > shark_number) and smell[ny][nx][1] == 0:
 				move = True
 				board[ny][nx] = shark_number
 				sharks_pos[shark_number][0], sharks_pos[shark_number][1] = nx, ny
 				sharks_vector[shark_number] = _dir
 				sharks.append(shark_number)
-				smell[ny][nx][0] = k
-				smell[ny][nx][1] = shark_number
-				smell_time_q.append((nx, ny, k))
 				break
 			# 자신의 냄새 공간 파악
-			if smell[ny][nx][1] == shark_number:
+			if smell[ny][nx][0] == shark_number:
 				my_smell_pos.append((nx, ny, _dir))
 		# 수가 더 낮은 상어를 만나면 죽는다.
-		if board[pre_y][pre_x] == shark_number:
-			board[pre_y][pre_x] = 0
 		if dead:
 			continue
 		# 빈 공간이 없으면 자신의 냄새로 이동
@@ -102,16 +106,17 @@ while time < 1000:
 			sharks_pos[shark_number][0], sharks_pos[shark_number][1] = nx, ny
 			sharks_vector[shark_number] = n_vector
 			sharks.append(shark_number)
-			smell[ny][nx][0] = k
-			smell[ny][nx][1] = shark_number
-			smell_time_q.append((nx, ny, k))
 
-		print("next:: ", sharks_pos[shark_number])
+		# print("next:: ", sharks_pos[shark_number])
 
 	## 냄새 카운팅
-	while smell_time_q:
+	# print(smell_time_q)
+	# for i in range(n):
+	# 	print(smell[i + 1][1:n + 1])
+	for i in range(len(smell_time_q)):
 		x, y, remain = smell_time_q.popleft()
-		if remain != smell[y][x][0]:
+		# print(remain, smell[y][x][1])
+		if remain != smell[y][x][1]:
 			continue
 		remain -= 1
 		if remain <= 0:
@@ -119,15 +124,10 @@ while time < 1000:
 			smell[y][x][1] = 0
 		else :
 			smell_time_q.append((x, y, remain))
-			smell[y][x][0] = remain
+			smell[y][x][1] = remain
+	# print(smell_time_q)
 
-	# ## 냄새 뿌리기
-	# for i in range(len(sharks)):
-	# 	shark_number = sharks[i]
-	# 	x, y = sharks_pos[shark_number]
-	# 	smell[y][x][0] = k
-	# 	smell[y][x][1] = shark_number
-
+	time += 1
 	# if time == 14:
 		# break
-print(time if time < 1000 else -1)
+print(time if time <= 1000 else -1)
