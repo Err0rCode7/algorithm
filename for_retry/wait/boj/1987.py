@@ -30,10 +30,9 @@ while q :
 		# if 0 <= ny < r and 0 <= nx < c and board[ny][nx] not in visited:
 		if not (0 <= ny < r and 0 <= nx < c):
 			continue
-		if board[ny][nx] in visited:
-			continue
-		q.add((nx, ny, visited + board[ny][nx]))
-		_max = max(_max, len(visited) + 1)
+		if board[ny][nx] not in visited:
+			q.add((nx, ny, visited + board[ny][nx]))
+			_max = max(_max, len(visited) + 1)
 		
 
 print(_max)
