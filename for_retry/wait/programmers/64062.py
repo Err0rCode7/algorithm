@@ -9,6 +9,7 @@ class Node :
 
 
 def solution(stones, k):
+	# 연결리스으 NlogN + N
 	n = len(stones)
 	listArray = [0] * n
 	pre = None
@@ -49,4 +50,35 @@ def solution(stones, k):
 			left.right = None
 
 	return time
+
+def solution2(stones, k):
+	# 이분탐색 풀이
+	# NlogM
+	
+	s = 1
+	e = max(stones)
+	answer = 1
+	while s <= e:
+		mid = (e + s) // 2
+		count = 0
+		possible = True
+		for stone in stones:
+			# 이미 모두 밟아서 못건너는 스톤일때
+			if stone < mid :
+				count += 1
+				# 못밟는 스톤이 연속해서 k개 있으면 인원 수를 줄임
+				if count == k :
+					e = mid - 1
+					possible = False
+					break
+			else :
+				count = 0
+		
+		if possible :
+			# 현재 인원 수에서 가능하므로 인원 수를 더 올려본다.
+			answer = max(answer, mid)
+			s = mid + 1
+	return answer
+
 print(solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3))
+print(solution2([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3))
