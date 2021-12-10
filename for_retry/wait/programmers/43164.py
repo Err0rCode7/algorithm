@@ -1,47 +1,35 @@
-from collections import deque
 import heapq
 
-def solution(tickets):
-	graph = {}
-	airport = set()
-	for start, end in tickets:
-		if start == end:
-			continue
-		if start in airport:
-			heapq.heappush(graph[start], end)
-		else :
-			airport.add(start)
-			path = [end]
-			graph[start] = path
-		if end not in airport:
-			graph[end] = []
-			airport.add(end)
-	start = "ICN"
-	answer = []
-	q = deque()
-	answer.append(start)
-	if graph[start]:
-		q.append((start, heapq.heappop(graph[start])))
-	while q:
-		_from, to = q.popleft()
-		answer.append(to)
-		if graph[to]:
-			temp = []
-			_next = None
-			if len(graph[to]) > 1:
-				while graph[to] :
-					_next = heapq.heappop(graph[to])
-					if to not in graph[_next]:
-						temp.append(_next)
-					else :
-						break
-			else :
-				_next = heapq.heappop(graph[to])
-			q.append((to, _next))
-			for _next in temp:
-				heapq.heappush(graph[to], _next)
+def dfs(tickets, visited, move_list, result, n) :
 
-	return answer
+	if len(move_list) == n + 1:
+		# print(move_list)
+		heapq.heappush(result, list(move_list))
+		return
+
+	for i in range(n):
+		start, end = tickets[i]
+		# print("start", start, "end", end)
+		if visited[i] == True or move_list[-1] != start:
+			continue
+		# print("from:", move_list[-1], "to", start, "to", end)
+		visited[i] = True
+		move_list.append(end)
+		dfs(tickets, visited, move_list, result, n)
+		visited[i] = False
+		move_list.pop()
+
+
+def solution(tickets):
+
+	n = len(tickets)
+	visited = [False] * n
+
+	move_list = ["ICN"]
+	result = []
+	dfs(tickets, visited, move_list, result, n)
+	
+	return result[0]
 
 print(solution([["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]	))
-print(solution([["ICN", "ICN"], ["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]	))
+print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]	))
