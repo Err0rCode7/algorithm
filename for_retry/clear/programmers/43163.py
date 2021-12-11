@@ -1,4 +1,5 @@
 import sys
+from collections import defaultdict
 
 sys.setrecursionlimit(10000)
 
@@ -27,10 +28,8 @@ def dfs(visited, words, begin, target, _min, count):
 		dfs(visited, words, word, target, _min, count + 1)
 		visited[word] = False
 def solution(begin, target, words):
-	visited = {}
+	visited = defaultdict(bool)
 	_min = [51]
-	for word in words:
-		visited[word] = False
 	dfs(visited, words, begin, target, _min, 0)
 
 	return _min[0] if _min[0] != 51 else 0
