@@ -33,6 +33,7 @@ def solution(a, edges):
 		graph[target].remove(node)
 		if len(graph[target]) == 1:
 			heapq.heappush(q, target)
+	# 마지막 검사가 0이 아닐때
 	if target >= 0 and a[target] != 0:
 		return -1
 	return answer
