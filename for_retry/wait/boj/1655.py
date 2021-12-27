@@ -6,8 +6,6 @@ n = int(input())
 
 left_heap = [] # 최대 힙
 right_heap = [] # 최소 힙
-LEFT = -1
-RIGHT = 1
 
 # mid = 0
 # result = []
