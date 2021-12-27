@@ -24,3 +24,11 @@ To get algorithm skills and practice coding
 	- 2017
 
 - Samsung
+	- shark series
+
+- Programmers
+	- Lv 3
+	- Lv 2
+
+- Baekjoon 
+	- [gold ~ platinum](https://www.acmicpc.net/workbook/view/4349)
