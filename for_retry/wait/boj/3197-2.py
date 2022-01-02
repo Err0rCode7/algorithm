@@ -23,20 +23,6 @@ for y in range(1, r + 1):
 		if board[y][x] == 'L':
 			swans.append((x, y))
 
-def can_break(board, x, y):
-	for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
-		nx, ny = x + dx, y + dy
-		if board[ny][nx] == 'X':
-			return True
-	return False
-
-for_break = set()
-
-for y in range(1, r + 1):
-	for x in range(1, c + 1):
-		if board[y][x] in ".L" and can_break(board, x, y):
-			for_break.add((x, y))
-
 def union_parent(a, b):
 	a = find_parent(parent, a)
 	b = find_parent(parent, b)
@@ -48,7 +34,7 @@ def union_parent(a, b):
 def union_4dir(board, x, y):
 	for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
 		nx, ny = x + dx, y + dy
-		if board[ny][nx] == '.':
+		if board[ny][nx] == '.' or board[ny][nx] == 'L':
 			union_parent(ny * (c + 2) + nx, y * (c + 2) + x)
 
 def break_down_ice(board, break_pos_list):
@@ -64,7 +50,7 @@ def break_down_ice(board, break_pos_list):
 				result.add((nx, ny))
 	return result
 
-def bfs(board, visited, q):
+def bfs(board, visited, q, result):
 	while q:
 		x, y, start = q.popleft()
 		if visited[y][x]:
@@ -73,17 +59,22 @@ def bfs(board, visited, q):
 		union_parent(y * (c + 2) + x, start)
 		for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
 			nx, ny = x + dx, y + dy
-			if board[ny][nx] in ".L":
+			if board[ny][nx] == 'L' or board[ny][nx] == '.':
 				q.append((nx, ny, y * (c + 2) + x))
+			elif board[ny][nx] == 'X':
+				result.add((x, y))
 
 def set_graph(board):
 	q = deque()
+	result = set()
 	visited = [[False] * (c + 2) for _ in range(r + 2)]
 	for i in range(1, r + 1):
 		for j in range(1, c + 1):
-			if board[i][j] in ".L" and not visited[i][j]:
-				q.append((j, i, i * (c + 2) + j))
-				bfs(board, visited, q)
+			if board[i][j] == 'L' or board[i][j] == '.':
+				if not visited[i][j]:
+					q.append((j, i, i * (c + 2) + j))
+					bfs(board, visited, q, result)
+	return result
 
 def check_swan():
 	x1, y1 = swans[0]
@@ -92,9 +83,9 @@ def check_swan():
 		return True
 	return False
 
-def solve(for_break):
+def solve():
 
-	set_graph(board)
+	for_break = set_graph(board)
 	result = 0
 	if check_swan():
 		return result
@@ -106,4 +97,4 @@ def solve(for_break):
 			break
 	return result
 
-print(solve(for_break))
+print(solve())
