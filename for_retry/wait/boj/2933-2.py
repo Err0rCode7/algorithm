@@ -43,23 +43,22 @@ def delete_one(height, src, dest):
 	return (x, y)
 
 def get_direction(height, offset):
-	result_height, src, dest = None, None, None
+	src, dest = None, None
+	result_height = r - height + 1
 	if offset % 2 == 0: # left to right
-		result_height = r - height + 1
 		src = 1
 		dest = c + 1
 	else:
-		result_height = r - height + 1
 		src = c
 		dest = 0
 	return (result_height, src, dest)
 
-def get_offset(move_list, visited):
+def get_offset(move_list):
 	offset = 1
 	while True and move_list:
 		flag = False
 		for x, y in move_list:
-			if board[y + offset][x] == 'B' or visited[y + offset][x]:
+			if board[y + offset][x] == 'B' or board[y + offset][x] == 'x':
 				flag = True
 				break
 		if flag:
@@ -84,34 +83,33 @@ def get_bfs_pos(x, y, q):
 	q.append((x, y))
 	result = []
 	visited = [[False for _ in range(c + 2) ] for _ in range(r + 2)]
-	move_list = []
+	visited[y][x] = True
 	board[y][x] = '.'
 	while q :
 		x, y = q.popleft()
 		result.append((x, y))
-		if board[y + 1][x] == '.' and not visited[y + 1][x]:
-			move_list.append((x, y))
 		for dx, dy in _dir:
 			nx, ny = x + dx, y + dy
 			if board[ny][nx] == 'x' and not visited[ny][nx]:
 				visited[ny][nx] = True
 				board[ny][nx] = '.'
 				q.append((nx, ny))
-	return (result, move_list)
+	return result
 
 def apply_gravity(visited, x, y, q):
-	result, move_list = [], []
+	result = []
 	for dx, dy in _dir:
 		nx, ny = x + dx, y + dy
 		if board[ny][nx] == 'x' and not visited[ny][nx]:
-			result, move_list = get_bfs_pos(nx, ny, q)
-	offset = get_offset(move_list, visited)
-	do_gravity(result, offset)
+			result = get_bfs_pos(nx, ny, q)
+			offset = get_offset(result)
+			do_gravity(result, offset)
+			result = []
 
 def print_result(board):
 	for y in range(1, r + 1):
 		for x in range(1, c + 1):
-			print(board[y][x], end=' ')
+			print(board[y][x], end='')
 		print()
 
 def solve(height, i, q):
@@ -129,3 +127,26 @@ def solution():
 	print_result(board)
 
 solution()
+
+'''
+8 8
+........
+........
+..x.....
+..x..x..
+..x..x..
+..x..x..
+..x..x..
+..x..x..
+2
+3 3
+
+........
+........
+..x....x
+..xxxxxx
+..x..x.x
+..x..x.x
+..xxxx..
+.....x..
+'''
