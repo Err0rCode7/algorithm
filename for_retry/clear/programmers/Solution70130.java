@@ -66,7 +66,7 @@ public class Solution70130 {
 			}
 			return answer;
 		}
-		static class Node {
+		class Node {
 			int count;
 			int value;
 

@@ -11,54 +11,97 @@ public class Main43163 {
 		result = solution.solution("hit", "cog", new String[] {"hot", "dot", "dog", "lot", "log"});
 		System.out.println(result);
 	}
-}
+	static class Solution {
+		public int solution(String begin, String target, String[] words) {
+			int answer = 0;
 
-class Solution {
-	public int solution(String begin, String target, String[] words) {
-		int answer = 0;
+			Queue<Node> que = new LinkedList<>();
+			que.add(new Node(0, begin));
+			boolean[] visited = new boolean[words.length];
+			while (que.size() > 0) {
+				Node cur = que.poll();
+				if (target.equals(cur.status)) {
+					answer = cur.count;
+					break;
+				}
+				for (int i = 0; i < words.length; i++) {
+					if (visited[i]) continue;
+					if (!isDifferentOnlyOne(cur.status, words[i])) continue;
 
-		Queue<Node> que = new LinkedList<>();
-		que.add(new Node(0, begin));
-		boolean[] visited = new boolean[words.length];
-		while (que.size() > 0) {
-			Node cur = que.poll();
-			if (target.equals(cur.status)) {
-				answer = cur.count;
-				break;
+					visited[i] = true;
+					que.add(new Node(cur.count + 1, words[i]));
+				}
 			}
-			for (int i = 0; i < words.length; i++) {
-				if (visited[i]) continue;
-				if (!isDifferentOnlyOne(cur.status, words[i])) continue;
+			return answer;
+		}
 
-				visited[i] = true;
-				que.add(new Node(cur.count + 1, words[i]));
+		public boolean isDifferentOnlyOne(String a, String b) {
+			//given a.length == b.length
+
+			int count = 0;
+			for (int i = 0; i < a.length(); i++) {
+				if (a.charAt(i) != b.charAt(i)) {
+					count += 1;
+				}
+				if (count > 1) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		static class Node {
+			int count;
+			String status;
+
+			public Node(int count, String status) {
+				this.count = count;
+				this.status = status;
 			}
 		}
-		return answer;
 	}
+	static class Solution2 {
+		public int solution(String begin, String target, String[] words) {
+			boolean[] visited = new boolean[words.length];
+			Queue<Node2> que = new LinkedList<>();
+			que.add(new Node2(begin, 0));
+			while (!que.isEmpty()) {
+				Node2 cur = que.poll();
 
-	public boolean isDifferentOnlyOne(String a, String b) {
-		//given a.length == b.length
+				if (cur.status.equals(target))
+					return cur.count;
 
-		int count = 0;
-		for (int i = 0; i < a.length(); i++) {
-			if (a.charAt(i) != b.charAt(i)) {
+				for (int i = 0; i < words.length; i++) {
+					if (visited[i] || ! differOnlyOneChar(cur.status, words[i]))
+						continue;
+					visited[i] = true;
+					que.add(new Node2(words[i], cur.count + 1));
+				}
+			}
+			return 0;
+		}
+
+		private boolean differOnlyOneChar(String src, String dest) {
+			int count = 0;
+			for (int i = 0; i < src.length(); i++) {
+				if (src.charAt(i) == dest.charAt(i))
+					continue;
 				count += 1;
+				if (count > 1)
+					break;
 			}
-			if (count > 1) {
-				return false;
-			}
+			return count == 1;
 		}
-		return true;
-	}
 
-	class Node {
-		int count;
-		String status;
+		static class Node2 {
+			String status;
+			int count;
 
-		public Node(int count, String status) {
-			this.count = count;
-			this.status = status;
+			public Node2(String curStatus, int count) {
+				this.status = curStatus;
+				this.count = count;
+			}
 		}
 	}
 }
+
